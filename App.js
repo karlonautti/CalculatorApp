@@ -5,7 +5,6 @@ import Calculator from './components/Calculator';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>CALCULATOR</Text>
       <Calculator />
       <StatusBar style="auto" />
     </View>
