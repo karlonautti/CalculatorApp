@@ -10,17 +10,17 @@ function Calculator() {
     const handlePlus = () => {
         const sum = Number(firstNumber) + Number(secondNumber);
         setResult(sum);
+        setHistory([...history, { key: `${history.length}`, operation: `${firstNumber} + ${secondNumber} = ${sum}` }]);
         setFirstNumber('');
         setSecondNumber('');
-        setHistory([...history, { key: result}]);
     }
 
     const handleMinus = () => {
         const diff = Number(firstNumber) - Number(secondNumber);
         setResult(diff);
+        setHistory([...history, { key: `${history.length}`, operation: `${firstNumber} - ${secondNumber} = ${diff}` }]);
         setFirstNumber('');
         setSecondNumber('');
-        setHistory([...history, { key: result}]);
     }
 
     return (
@@ -69,9 +69,9 @@ function Calculator() {
 
             <FlatList
                 data={history}
-                keyExtractor={(item, index) => item.key}
-                renderItem={({item}) => <Text>{item.key}</Text>}
-                ListEmptyComponent={<Text>No data</Text>}
+                renderItem={({item}) => <Text style={styles.listItem}>{item.operation}</Text>}
+                ListHeaderComponent={<Text style={styles.header}>History</Text>}
+                ListEmptyComponent={<Text style={styles.emptyComponent}>No data</Text>}
                 ItemSeparatorComponent={
                     <View style={styles.itemSeparator}></View>
                 }
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+        marginBottom: 10,
     },
     button: {
         marginHorizontal: 5,
@@ -122,10 +123,24 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     result: {
-        marginTop: 20,
+        margin: 5,
         fontSize: 24,
         fontWeight: 'bold',
     },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        margin: 10,
+        color: 'blue',
+    },
+    listItem: {
+        textAlign: 'center',
+        fontSize: 20,
+      },
+    emptyComponent: {
+        textAlign: 'center',
+      },
     itemSeparator: {
         height: 1,
         backgroundColor: 'blue',
