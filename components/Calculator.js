@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Pressable, TextInput, View, FlatList } from "react-native";
+import { StyleSheet, Text, Pressable, TextInput, View } from "react-native";
 
-function Calculator() {
+function Calculator({ navigation}) {
     const [firstNumber, setFirstNumber] = useState('');
     const [secondNumber, setSecondNumber] = useState('');
     const [result, setResult] = useState(null);
@@ -60,25 +60,22 @@ function Calculator() {
                 >
                     <Text style={styles.buttonText}>-</Text>
                 </Pressable>
+
+                <Pressable
+                    style={({ pressed }) => [
+                        styles.button,
+                        pressed && styles.buttonPressed
+                    ]}
+                    onPress={() => navigation.navigate('History', { history })}
+                >
+                    <Text style={styles.buttonText}>History</Text>
+                </Pressable>
             </View>
 
             {result !== null && (
                 <Text style={styles.result}>Result: {result}</Text>
 
             )}
-
-            <FlatList
-                data={history}
-                renderItem={({item}) => <Text style={styles.listItem}>{item.operation}</Text>}
-                ListHeaderComponent={<Text style={styles.header}>History</Text>}
-                ListEmptyComponent={<Text style={styles.emptyComponent}>No data</Text>}
-                ItemSeparatorComponent={
-                    <View style={styles.itemSeparator}></View>
-                }
-
-            >
-            </FlatList>
-
         </View>
     );
 
@@ -126,24 +123,6 @@ const styles = StyleSheet.create({
         margin: 5,
         fontSize: 24,
         fontWeight: 'bold',
-    },
-    header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        margin: 10,
-        color: 'blue',
-    },
-    listItem: {
-        textAlign: 'center',
-        fontSize: 20,
-      },
-    emptyComponent: {
-        textAlign: 'center',
-      },
-    itemSeparator: {
-        height: 1,
-        backgroundColor: 'blue',
     },
 });
 
